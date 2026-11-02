@@ -21,8 +21,8 @@ jobs:
 
       - name: Unzip source code
         run: |
-          unzip -o FocusPhone.zip -d .
-          rm -f FocusPhone.zip
+          unzip -o "FocusPhone(5).zip" -d .
+          rm -f "FocusPhone(5).zip"
           if [ -d FocusPhone ] && [ -f FocusPhone/settings.gradle.kts ]; then
             mv FocusPhone/* .
             rm -rf FocusPhone
