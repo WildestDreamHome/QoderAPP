@@ -29,8 +29,12 @@ jobs:
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+      - name: Generate Gradle wrapper if missing
+        run: |
+          if [ ! -f gradlew ]; then
+            gradle wrapper --gradle-version 8.2
+          fi
+          chmod +x gradlew
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
@@ -40,4 +44,3 @@ jobs:
         with:
           name: FocusPhone-Debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
-
