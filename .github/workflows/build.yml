@@ -23,7 +23,6 @@ jobs:
         run: |
           unzip -o FocusPhone.zip -d .
           rm -f FocusPhone.zip
-          # If files are in a subdirectory, move them up
           if [ -d FocusPhone ] && [ -f FocusPhone/settings.gradle.kts ]; then
             mv FocusPhone/* .
             rm -rf FocusPhone
@@ -31,7 +30,6 @@ jobs:
             mv FocusPhone/FocusPhone/* .
             rm -rf FocusPhone
           fi
-          ls -la
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -43,6 +41,11 @@ jobs:
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
+      - name: Setup Gradle 8.2
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: 8.2
+
       - name: Build Debug APK
         run: gradle assembleDebug
 
@@ -51,5 +54,6 @@ jobs:
         with:
           name: FocusPhone-Debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
+
 
 
